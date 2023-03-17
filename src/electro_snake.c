@@ -4,9 +4,9 @@
 void sort_vertical(int **matrix, int n, int m, int **result_matrix);
 void sort_horizontal(int **matrix, int n, int m, int **result_matrix);
 void sort_spiral(int **matrix, int n, int m, int **result_matrix);
-
+void swap(int *a, int *b);
 void input(int **matrix, int n, int m);
-
+void povorot(int **matrix, int n, int m);
 void output(int **matrix, int n, int m);
 
 int main() {
@@ -39,17 +39,27 @@ int main() {
     }
     return 0;
 }
-
-void sort_vertical(int **matrix, int n, int m, int **result_matrix) {
-    for (int i = 0; i < n; i++) {
+void swap(int *a, int *b) {
+    int x = *a;
+    *a = *b;
+    *b = x;
+}
+void povorot(int **matrix, int n, int m) {
+    for (int i = 0; i < n / 2 - 1; i++) {
         for (int j = 0; j < m; j++) {
-            if (i % 2 == 0) {
-                result_matrix[j][i] = (*matrix)[j + m * i];
-            } else {
-                result_matrix[m - 1 - j][i] = (*matrix)[j + m * i];
+            if (j % 1 == 0) {
+                swap(&matrix[i][j], &matrix[n - i][j]);
             }
         }
     }
+}
+void sort_vertical(int **matrix, int n, int m, int **result_matrix) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            result_matrix[j][i] = matrix[i][j];
+        }
+    }
+    povorot(result_matrix, n, m);
 }
 
 void input(int **matrix, int n, int m) {
